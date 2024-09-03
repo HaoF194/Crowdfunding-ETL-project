@@ -1,84 +1,83 @@
-# Project 2: Crowdfunding_ETL
+# Crowdfunding ETL Project
 
-Group 4: Alvin, Kristina, Mason, Lisa and Frank
+## Group Members:
+- Alvin
+- Kristina
+- Mason
+- Lisa
+- Frank
 
 ## Introduction
 
-For the ETL mini project, we will work in a group of 5 to practise building an ETL pipeline using Python, Pandas, and either Python dictionary methods or regular expressions to extract and transform the data. After transforming the data, we create four CSV files and use the CSV file data to create an ERD and a table schema. Finally, we upload the CSV file data into a Postgres database.
+This project involves building an ETL (Extract, Transform, Load) pipeline using Python, Pandas, and either Python dictionary methods or regular expressions. The goal is to extract and transform data to create four CSV files, and then use this data to create an Entity-Relationship Diagram (ERD) and a table schema. Finally, the CSV data will be uploaded into a PostgreSQL database.
 
 ## Programming Technique
 
-We have been used Pair Programming, in this case, group programming where 5 of us work together at one workstation. On team member, called the "driver", writes and execute the code while the others, known as the "observers" or "navigators," reviews each line of code as it is written, give feedback or recommendations as well as advice on debugging. We have switched roles frequently among us in order to balance the coding time between all members.
+We used a collaborative approach known as Pair Programming, where multiple team members work together at one workstation. One member, the "driver," writes and executes the code, while the others, the "observers" or "navigators," review each line of code, give feedback, and advise on debugging. Roles are frequently switched to ensure a balanced coding experience for all team members.
 
-This collaborative approach has several benefits:
+## Data Transformation
 
-  1. Improved Code Quality: The constant review process helps catch mistakes early, leading to higher quality code.
-  2. Knowledge Sharing: It facilitates the sharing of knowledge between team members, helping less experienced programmers learn from their more experienced counterparts.
-  3. Enhanced Problem-Solving: More people working on the same problem can come up with more creative and effective solutions than one person working alone.
-  4. Increased Team Communication: It improves communication within the team, leading to better teamwork and collaboration.
-  5. Reduced Risk of Burnout: Switching roles regularly helps keep all programmers engaged and reduces the risk of burnout.
+### 1. Category and Subcategory DataFrames
+**Category DataFrame:**
+- Extracted and transformed data from `crowdfunding.xlsx`.
+- Columns: `category_id` (sequential from cat1 to cat9), `category` (category titles).
+- Exported as `category.csv`.
 
-## Data Transformation 
+**Subcategory DataFrame:**
+- Extracted and transformed data from `crowdfunding.xlsx`.
+- Columns: `subcategory_id` (sequential from subcat1 to subcat24), `subcategory` (subcategory titles).
+- Exported as `subcategory.csv`.
 
-### Create Category and Subcategory DataFrames
+### 2. Campaign DataFrame
+- Extracted and transformed data from `crowdfunding.xlsx`.
+- Columns: 
+  - `cf_id`
+  - `contact_id`
+  - `company_name`
+  - `description` (renamed from blurb)
+  - `goal` (converted to float)
+  - `pledged` (converted to float)
+  - `outcome`
+  - `backers_count`
+  - `country`
+  - `currency`
+  - `launch_date` (renamed from launched_at and converted to datetime format)
+  - `end_date` (renamed from deadline and converted to datetime format)
+  - `category_id`
+  - `subcategory_id`
+- Exported as `campaign.csv`.
 
-#### Category DataFrame:
+### 3. Contacts DataFrame
+- Imported `contacts.xlsx` into a DataFrame.
+- Converted each row to a dictionary.
+- Extracted dictionary values and added them to a new list.
+- Created a new DataFrame from this list.
+- Split `name` column into `first_name` and `last_name`.
+- Exported as `contacts.csv`.
 
-Extract and transform crowdfunding.xlsx data.
+## Database Creation
 
-Columns: category_id (sequential from cat1 to catn), category (category titles).
+### Crowdfunding Database
+1. **Inspect CSV Files:** Review the four CSV files created (`category.csv`, `subcategory.csv`, `campaign.csv`, `contacts.csv`).
+2. **Sketch ERD:** Use QuickDBD to sketch an ERD.
+3. **Create Table Schema:**
+    - Specify data types, primary keys, foreign keys, and constraints for each CSV file.
+    - Save the schema as `crowdfunding_db_schema.sql`.
+4. **Create PostgreSQL Database:**
+    - Create a new Postgres database named `crowdfunding_db`.
+    - Use the schema to create the tables in the correct order.
+    - Verify table creation with SELECT statements.
+5. **Import CSV Data:**
+    - Import each CSV file into its corresponding SQL table.
+    - Verify the data with SELECT statements for each table.
 
-Export as category.csv and save to GitHub.
-  
-#### Subcategory DataFrame:
+## Files Overview
+- `category.csv`: Contains category data.
+- `subcategory.csv`: Contains subcategory data.
+- `campaign.csv`: Contains campaign data.
+- `contacts.csv`: Contains contacts data.
+- `crowdfunding_db_schema.sql`: Contains the database schema.
 
-Extract and transform crowdfunding.xlsx data.
+## Conclusion
 
-Columns: subcategory_id (sequential from subcat1 to subcatn), subcategory (subcategory titles).
-
-Export as subcategory.csv and save to GitHub.
-  
-#### Create Campaign DataFrame
-
-Extract and transform crowdfunding.xlsx data.
-
-Columns:
-    cf_id, contact_id, company_name, description (renamed from blurb), goal (float), pledged (float), outcome, backers_count, country, 
-    currency, launch_date (renamed from launched_at and converted to datetime format), 
-    end_date (renamed from deadline and converted to datetime format), category_id, subcategory_id.
-    
-Export as campaign.csv and save to GitHub.
-  
-#### Create Contacts DataFrame
-
-Import contacts.xlsx into a DataFrame.
-
-Convert each row to a dictionary.
-
-Extract dictionary values and add them to a new list.
-
-Create a new DataFrame from this list.
-
-Split name column into first_name and last_name.
-
-### Database Creation
-
-#### Create the Crowdfunding Database
-Inspect the four CSV files.
-
-Sketch an ERD using QuickDBD.
-
-Create a table schema for each CSV file (specifying data types, primary keys, foreign keys, and other constraints).
-
-Save the schema as crowdfunding_db_schema.sql and save to GitHub.
-
-Create a new Postgres database named crowdfunding_db.
-
-Use the schema to create the tables in the correct order.
-
-Verify table creation with a SELECT statement for each table.
-
-Import each CSV file into its corresponding SQL table.
-
-Verify the data with a SELECT statement for each table.
-
+This project demonstrates the practical implementation of an ETL pipeline, from data extraction and transformation using Python and Pandas to the creation and population of a PostgreSQL database. The collaborative pair programming approach ensured the quality and efficiency of the code and facilitated knowledge sharing among team members.
